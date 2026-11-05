@@ -5,9 +5,22 @@ import { StatusBar } from "expo-status-bar";
 import Header from "./src/components/layout/header";
 import BottomNav from "./src/components/layout/BottomNav";
 import DashboardScreen from "./src/screens/DashboardScreen";
+import GajiScreen from "./src/screens/GajiScreen";
 import PlaceholderScreen from "./src/screens/PlaceholderScreen";
 import { MENU } from "./src/constants/menu";
 import { bulanIni } from "./src/utils/periode";
+
+// Daftar halaman: id menu → komponen halamannya.
+// Setiap kali kamu membuat halaman baru, tambahkan satu baris di sini.
+const SCREENS = {
+  gaji: GajiScreen,
+  // kategori: KategoriScreen,
+  // budget: BudgetScreen,
+  // pengeluaran: PengeluaranScreen,
+  // pemasukan: PemasukanScreen,
+  // portofolio: PortofolioScreen,
+  // evaluasi: EvaluasiScreen,
+};
 
 export default function App() {
   const [period, setPeriod] = useState(bulanIni());
@@ -28,7 +41,14 @@ export default function App() {
     if (groupId === "beranda") {
       return <DashboardScreen period={period} />;
     }
+
     const sub = group.children.find((c) => c.id === subId);
+    const Screen = SCREENS[subId]; // cari halaman di daftar
+
+    if (Screen) {
+      return <Screen period={period} />;
+    }
+    // Belum ada halamannya → tampilkan halaman sementara
     return <PlaceholderScreen title={sub ? sub.label : group.label} />;
   };
 
