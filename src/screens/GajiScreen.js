@@ -21,18 +21,9 @@ export default function GajiScreen() {
     nominal,
     setPeriode,
     setNominal,
-    setData,
     handleCreate,
+    handleDelete,
   } = useGaji();
-
-  const [daftarGaji, setDaftarGaji] = useState([
-    { id: 1, period: "2026-09", nominal: 10000000 },
-    { id: 2, period: "2026-08", nominal: 10000000 },
-  ]);
-
-  const hapus = (id) => {
-    setDaftarGaji(daftarGaji.filter((g) => g.id !== id));
-  };
 
   return (
     <ScrollView
@@ -111,7 +102,7 @@ export default function GajiScreen() {
                 {formatRupiah(item.nominal)}
               </Text>
               <Pressable
-                onPress={() => hapus(item.id)}
+                onPress={() => handleDelete(item.id)}
                 hitSlop={8}
                 className="w-8 items-end"
               >

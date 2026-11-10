@@ -9,4 +9,8 @@ export const gajiService = {
     const response = await apiClient.post(`gaji`, payload);
     return response.data;
   },
+  delete: async (id) => {
+    const response = await apiClient.delete(`gaji/${id}`);
+    return response.data;
+  },
 };

@@ -45,6 +45,15 @@ export const useGaji = () => {
       setLoading(false);
     }
   };
+  const handleDelete = async (id) => {
+    try {
+      await gajiService.delete(id);
+      await fetchData();
+      Alert.alert("Gaji berhasil dihapus");
+    } catch (err) {
+      console.log("delete gaji error:", err.response?.status, err.message);
+    }
+  };
 
   return {
     data,
@@ -56,6 +65,7 @@ export const useGaji = () => {
     setNominal,
     setData,
     handleCreate,
+    handleDelete,
     refetch: fetchData,
   };
 };
