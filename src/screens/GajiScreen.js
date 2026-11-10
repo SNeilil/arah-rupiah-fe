@@ -8,46 +8,27 @@ import {
   View,
 } from "react-native";
 import Card from "../components/ui/Card";
-// import { formatRupiah } from "../utils/format";
 import { bulanIni, labelBulan } from "../utils/periode";
 import { formatRupiah } from "../utils/format";
 import { useGaji } from "../hooks/GajiUse";
 
 export default function GajiScreen() {
-  const { data, setData } = useGaji();
-  // console.log("data", data);
+  const {
+    data,
+    loading,
+    error,
+    periode,
+    nominal,
+    setPeriode,
+    setNominal,
+    setData,
+    handleCreate,
+  } = useGaji();
 
   const [daftarGaji, setDaftarGaji] = useState([
     { id: 1, period: "2026-09", nominal: 10000000 },
     { id: 2, period: "2026-08", nominal: 10000000 },
   ]);
-
-  // Isi kolom form
-  const [periode, setPeriode] = useState(bulanIni());
-  const [nominal, setNominal] = useState("");
-
-  const simpan = () => {
-    const angka = Number(nominal);
-
-    if (!/^\d{4}-\d{2}$/.test(periode)) {
-      Alert.alert(
-        "Periode salah",
-        "Tulis dengan format TAHUN-BULAN, contoh 2026-10",
-      );
-      return;
-    }
-    if (!angka || angka <= 0) {
-      Alert.alert("Nominal kosong", "Isi nominal gaji dulu ya");
-      return;
-    }
-
-    // Tambahkan data baru di urutan paling atas
-    setDaftarGaji([
-      { id: Date.now(), period: periode, nominal: angka },
-      ...daftarGaji,
-    ]);
-    setNominal(""); // kosongkan lagi kolom nominal
-  };
 
   const hapus = (id) => {
     setDaftarGaji(daftarGaji.filter((g) => g.id !== id));
@@ -92,7 +73,7 @@ export default function GajiScreen() {
         </View>
 
         <Pressable
-          onPress={simpan}
+          onPress={handleCreate}
           className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
         >
           <Text className="font-bold text-white">+ Simpan gaji</Text>
