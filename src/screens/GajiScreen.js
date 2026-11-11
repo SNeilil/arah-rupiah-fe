@@ -104,7 +104,7 @@ export default function GajiScreen() {
               <Pressable
                 onPress={() => handleDelete(item.id)}
                 hitSlop={8}
-                className="w-8 items-end"
+                className="w-8 items-end cursor-pointer"
               >
                 <Text className="text-lg text-slate-400">✕</Text>
               </Pressable>
