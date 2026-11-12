@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   View,
+  Button,
 } from "react-native";
 import Card from "../components/ui/Card";
 import { bulanIni, labelBulan } from "../utils/periode";
@@ -19,10 +20,14 @@ export default function GajiScreen() {
     error,
     periode,
     nominal,
+    idEdit,
     setPeriode,
     setNominal,
     handleCreate,
     handleDelete,
+    handlePress,
+    handleClear,
+    handleEdit,
   } = useGaji();
 
   return (
@@ -43,9 +48,12 @@ export default function GajiScreen() {
           <TextInput
             value={periode}
             onChangeText={setPeriode}
-            placeholder="2026-10"
+            editable={!idEdit}
+            placeholder="2026-10-05"
             placeholderTextColor="#94a3b8"
-            className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
+            className={`rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-white ${
+              idEdit ? "opacity-50" : ""
+            }`}
           />
         </View>
 
@@ -62,13 +70,27 @@ export default function GajiScreen() {
             className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-3 text-slate-900 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
           />
         </View>
-
-        <Pressable
-          onPress={handleCreate}
-          className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
-        >
-          <Text className="font-bold text-white">+ Simpan gaji</Text>
-        </Pressable>
+        {idEdit !== "" ? (
+          <Pressable
+            onPress={handleEdit}
+            className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
+          >
+            <Text className="font-bold text-white">Simpan update</Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            onPress={handleCreate}
+            className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
+          >
+            <Text className="font-bold text-white">+ Simpan gaji</Text>
+          </Pressable>
+        )}
+        <Button
+          title="clear"
+          onPress={() => {
+            handleClear();
+          }}
+        />
       </Card>
 
       {/* CARD 2: Daftar gaji */}
@@ -91,24 +113,23 @@ export default function GajiScreen() {
           </Text>
         ) : (
           data.map((item) => (
-            <View
-              key={item.id}
-              className="flex-row items-center border-b border-slate-100 py-3 dark:border-slate-700"
-            >
-              <Text className="flex-1 text-slate-900 dark:text-white">
-                {labelBulan(item.periode)}
-              </Text>
-              <Text className="flex-1 text-right text-slate-900 dark:text-white">
-                {formatRupiah(item.nominal)}
-              </Text>
-              <Pressable
-                onPress={() => handleDelete(item.id)}
-                hitSlop={8}
-                className="w-8 items-end cursor-pointer"
-              >
-                <Text className="text-lg text-slate-400">✕</Text>
-              </Pressable>
-            </View>
+            <Pressable key={item.id} onPress={() => handlePress(item)}>
+              <View className="flex-row items-center border-b border-slate-100 py-3 dark:border-slate-700">
+                <Text className="flex-1 text-slate-900 dark:text-white">
+                  {labelBulan(item.periode)}
+                </Text>
+                <Text className="flex-1 text-right text-slate-900 dark:text-white">
+                  {formatRupiah(item.nominal)}
+                </Text>
+                <Pressable
+                  onPress={() => handleDelete(item.id)}
+                  hitSlop={8}
+                  className="w-8 items-end cursor-pointer"
+                >
+                  <Text className="text-lg text-slate-400">✕</Text>
+                </Pressable>
+              </View>
+            </Pressable>
           ))
         )}
       </Card>

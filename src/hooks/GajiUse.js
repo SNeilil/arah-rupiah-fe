@@ -9,6 +9,7 @@ export const useGaji = () => {
   const [loading, setLoading] = useState(false);
   const [periode, setPeriode] = useState(today());
   const [nominal, setNominal] = useState("");
+  const [idEdit, setIdEdit] = useState("");
 
   const fetchData = useCallback(async () => {
     try {
@@ -45,6 +46,12 @@ export const useGaji = () => {
       setLoading(false);
     }
   };
+
+  const handlePress = async (item) => {
+    setPeriode(String(item.periode).slice(0, 10));
+    setNominal(String(item.nominal));
+    setIdEdit(item.id);
+  };
   const handleDelete = async (id) => {
     try {
       await gajiService.delete(id);
@@ -54,6 +61,26 @@ export const useGaji = () => {
       console.log("delete gaji error:", err.response?.status, err.message);
     }
   };
+  const handleClear = () => {
+    setPeriode(today());
+    setNominal("");
+    setIdEdit("");
+  };
+  const handleEdit = async () => {
+    setLoading(true);
+    const payload = { nominal };
+    try {
+      await gajiService.update(idEdit, payload);
+      await fetchData();
+      setNominal("");
+      Alert.alert("Gaji berhasil diupdate");
+    } catch (err) {
+      console.log("create gaji error:", err.response?.status, err.message);
+      Alert.alert("Gagal edit gaji");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     data,
@@ -61,11 +88,15 @@ export const useGaji = () => {
     error,
     periode,
     nominal,
+    idEdit,
     setPeriode,
     setNominal,
     setData,
     handleCreate,
     handleDelete,
+    handlePress,
+    handleClear,
+    handleEdit,
     refetch: fetchData,
   };
 };
