@@ -6,6 +6,7 @@ import Header from "./src/components/layout/header";
 import BottomNav from "./src/components/layout/BottomNav";
 import DashboardScreen from "./src/screens/DashboardScreen";
 import GajiScreen from "./src/screens/GajiScreen";
+import KategoriScreen from "./src/screens/KategoriScreen";
 import PlaceholderScreen from "./src/screens/PlaceholderScreen";
 import { MENU } from "./src/constants/menu";
 import { bulanIni } from "./src/utils/periode";
@@ -14,7 +15,7 @@ import { bulanIni } from "./src/utils/periode";
 // Setiap kali kamu membuat halaman baru, tambahkan satu baris di sini.
 const SCREENS = {
   gaji: GajiScreen,
-  // kategori: KategoriScreen,
+  kategori: KategoriScreen,
   // budget: BudgetScreen,
   // pengeluaran: PengeluaranScreen,
   // pemasukan: PemasukanScreen,
