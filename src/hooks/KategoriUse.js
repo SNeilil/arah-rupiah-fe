@@ -33,15 +33,16 @@ export const useKategori = () => {
 
   const handleCreate = async () => {
     setLoading(true);
-    const payload = { periode, nominal };
+    const payload = { name, isInves };
     try {
       await categoryService.create(payload);
       await fetchData();
-      setNominal("");
-      Alert.alert("Gaji berhasil ditambah");
+      setName("");
+      setIsInves(false);
+      Alert.alert("Kategori berhasil ditambah");
     } catch (err) {
-      console.log("create gaji error:", err.response?.status, err.message);
-      Alert.alert("Gagal menambah gaji");
+      console.log("create kategori error:", err.response?.status, err.message);
+      Alert.alert("Gagal menambah kategori");
     } finally {
       setLoading(false);
     }
@@ -56,9 +57,9 @@ export const useKategori = () => {
     try {
       await categoryService.delete(id);
       await fetchData();
-      Alert.alert("Gaji berhasil dihapus");
+      Alert.alert("Kategori berhasil dihapus");
     } catch (err) {
-      console.log("delete gaji error:", err.response?.status, err.message);
+      console.log("delete kategori error:", err.response?.status, err.message);
     }
   };
   const handleClear = () => {
@@ -68,15 +69,16 @@ export const useKategori = () => {
   };
   const handleEdit = async () => {
     setLoading(true);
-    const payload = { nominal };
+    const payload = { name, isInves };
     try {
       await categoryService.update(idEdit, payload);
       await fetchData();
-      setNominal("");
-      Alert.alert("Gaji berhasil diupdate");
+      setName("");
+      setIsInves(false);
+      Alert.alert("Kategori berhasil diupdate");
     } catch (err) {
-      console.log("create gaji error:", err.response?.status, err.message);
-      Alert.alert("Gagal edit gaji");
+      console.log("create kategori error:", err.response?.status, err.message);
+      Alert.alert("Gagal edit kategori");
     } finally {
       setLoading(false);
     }
