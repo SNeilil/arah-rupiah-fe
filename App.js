@@ -10,13 +10,14 @@ import KategoriScreen from "./src/screens/KategoriScreen";
 import PlaceholderScreen from "./src/screens/PlaceholderScreen";
 import { MENU } from "./src/constants/menu";
 import { bulanIni } from "./src/utils/periode";
+import BudgetScreen from "./src/screens/BudgetScreen";
 
 // Daftar halaman: id menu → komponen halamannya.
 // Setiap kali kamu membuat halaman baru, tambahkan satu baris di sini.
 const SCREENS = {
   gaji: GajiScreen,
   kategori: KategoriScreen,
-  // budget: BudgetScreen,
+  budget: BudgetScreen,
   // pengeluaran: PengeluaranScreen,
   // pemasukan: PemasukanScreen,
   // portofolio: PortofolioScreen,
