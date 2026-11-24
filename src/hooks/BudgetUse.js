@@ -66,7 +66,9 @@ export const useBudget = () => {
   };
 
   const handlePress = async (item) => {
-    setPeriode(String(item.periode).slice(0, 10));
+    setSelectGaji(item.id_gaji);
+    setSelectCategory(item.id_category);
+    setPersen(String(item.persen));
     setNominal(String(item.nominal));
     setIdEdit(item.id);
   };
