@@ -23,13 +23,23 @@ export default function BudgetScreen() {
     category,
     selectGaji,
     selectCategory,
+    idEdit,
+    nominal,
+    persen,
+    handleCreate,
+    handlePress,
+    handleDelete,
+    handleClear,
+    handleEdit,
     setData,
     setGaji,
     setCategory,
     setSelectGaji,
     setSelectCategory,
+    setIdEdit,
+    setNominal,
+    setPersen,
   } = useBudget();
-  console.log(data);
 
   return (
     <ScrollView
@@ -90,8 +100,8 @@ export default function BudgetScreen() {
               Persen
             </Text>
             <TextInput
-              // value={periode}
-              // onChangeText={setPeriode}
+              value={persen}
+              onChangeText={setPersen}
               // editable={!idEdit}
               placeholder="100"
               placeholderTextColor="#94a3b8"
@@ -103,8 +113,8 @@ export default function BudgetScreen() {
               Nominal
             </Text>
             <TextInput
-              // value={periode}
-              // onChangeText={setPeriode}
+              value={nominal}
+              onChangeText={setNominal}
               // editable={!idEdit}
               placeholder="100000"
               placeholderTextColor="#94a3b8"
@@ -112,7 +122,7 @@ export default function BudgetScreen() {
             />
           </View>
         </View>
-        {/* {idEdit !== "" ? (
+        {idEdit !== "" ? (
           <Pressable
             onPress={handleEdit}
             className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
@@ -124,9 +134,9 @@ export default function BudgetScreen() {
             onPress={handleCreate}
             className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
           >
-            <Text className="font-bold text-white">+ Simpan gaji</Text>
+            <Text className="font-bold text-white">Simpan Budget</Text>
           </Pressable>
-        )} */}
+        )}
         <Button
           title="clear"
           onPress={() => {
@@ -167,7 +177,7 @@ export default function BudgetScreen() {
                   {formatRupiah(item.nominal)}
                 </Text>
                 <Pressable
-                  // onPress={() => handleDelete(item.id)}
+                  onPress={() => handleDelete(item.id)}
                   hitSlop={8}
                   className="w-8 items-end cursor-pointer"
                 >
