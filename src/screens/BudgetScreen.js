@@ -12,20 +12,24 @@ import Card from "../components/ui/Card";
 import { Picker } from "@react-native-picker/picker";
 import { useBudget } from "../hooks/BudgetUse";
 import { labelBulan } from "../utils/periode";
+import { formatRupiah } from "../utils/format";
 
 export default function BudgetScreen() {
   const {
     loading,
     error,
+    data,
     gaji,
     category,
     selectGaji,
     selectCategory,
+    setData,
     setGaji,
     setCategory,
     setSelectGaji,
     setSelectCategory,
   } = useBudget();
+  console.log(data);
 
   return (
     <ScrollView
@@ -108,18 +112,71 @@ export default function BudgetScreen() {
             />
           </View>
         </View>
+        {/* {idEdit !== "" ? (
+          <Pressable
+            onPress={handleEdit}
+            className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
+          >
+            <Text className="font-bold text-white">Simpan update</Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            onPress={handleCreate}
+            className="items-center rounded-lg bg-teal-700 py-3 active:opacity-80"
+          >
+            <Text className="font-bold text-white">+ Simpan gaji</Text>
+          </Pressable>
+        )} */}
+        <Button
+          title="clear"
+          onPress={() => {
+            handleClear();
+          }}
+        />
       </Card>
 
       <Card>
         <View className="flex-row border-b border-slate-200 pb-2 dark:border-slate-700">
           <Text className="flex-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
-            Periode
+            Kategori
           </Text>
           <Text className="flex-1 text-right text-xs font-semibold text-slate-500 dark:text-slate-400">
-            Nominal
+            %
+          </Text>
+          <Text className="flex-1 text-right text-xs font-semibold text-slate-500 dark:text-slate-400">
+            Budget
           </Text>
           <View className="w-8" />
         </View>
+        {data.length === 0 ? (
+          <Text className="py-6 text-center text-slate-500 dark:text-slate-400">
+            Belum ada data gaji
+          </Text>
+        ) : (
+          data.map((item) => (
+            <Pressable key={item.id} onPress={() => handlePress(item)}>
+              <View className="flex-row items-center border-b border-slate-100 py-3 dark:border-slate-700">
+                <Text className="flex-1 text-slate-900 dark:text-white">
+                  {item.name}
+                </Text>
+                <Text className="flex-1 text-right text-slate-900 dark:text-white">
+                  {item.persen}
+                </Text>
+                <Text className="flex-1 text-right text-slate-900 dark:text-white">
+                  {" "}
+                  {formatRupiah(item.nominal)}
+                </Text>
+                <Pressable
+                  // onPress={() => handleDelete(item.id)}
+                  hitSlop={8}
+                  className="w-8 items-end cursor-pointer"
+                >
+                  <Text className="text-lg text-slate-400">✕</Text>
+                </Pressable>
+              </View>
+            </Pressable>
+          ))
+        )}
       </Card>
     </ScrollView>
   );

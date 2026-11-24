@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { gajiService } from "../api/gajiApi";
 import { categoryService } from "../api/kategoriApi";
+import { budgetService } from "../api/budgetApi";
 import { Alert } from "react-native";
 
 export const useBudget = () => {
+  const [data, setData] = useState([]);
   const [gaji, setGaji] = useState([]);
   const [selectGaji, setSelectGaji] = useState([]);
   const [category, setCategory] = useState([]);
@@ -13,13 +15,15 @@ export const useBudget = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await gajiService.getAll();
-      setGaji(response.data);
-      const res = await categoryService.getAll();
-      setCategory(res.data);
+      const responseGaji = await gajiService.getAll();
+      setGaji(responseGaji.data);
+      const responseCategory = await categoryService.getAll();
+      setCategory(responseCategory.data);
+      const responseBudget = await budgetService.getAll();
+      setData(responseBudget.data);
       setError(null);
     } catch (err) {
-      console.log("error gaji:", err.response?.status, err.message);
+      console.log("error fetch:", err.response?.status, err.message);
       setError(err);
     }
   }, []);
@@ -36,10 +40,12 @@ export const useBudget = () => {
   return {
     loading,
     error,
+    data,
     gaji,
     category,
     selectGaji,
     selectCategory,
+    setData,
     setGaji,
     setCategory,
     setSelectGaji,
